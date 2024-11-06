@@ -16,7 +16,7 @@ const App = () => {
             setWeb3(web3);
             window.ethereum.request({ method: "eth_requestAccounts" })
                 .then(accounts => setAccount(accounts[0]));
-            const loterieInstance = new web3.eth.Contract(LoterieABI.abi, "0xB50730e707Afcb315E081811fA1c11AcC1c43C04");
+            const loterieInstance = new web3.eth.Contract(LoterieABI.abi, "0xD69aEA3D142335188248187824a0AB7D89D2c8E3");
             setLoterie(loterieInstance);
         }
     }, []);
@@ -24,7 +24,7 @@ const App = () => {
     const participer = async () => {
         await loterie.methods.participer().send({
             from: account,
-            value: web3.utils.toWei("0.01", "ether")
+            value: web3.utils.toWei("0.001", "ether")
         });
     };
 
