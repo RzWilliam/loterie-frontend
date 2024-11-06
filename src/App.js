@@ -16,7 +16,7 @@ const App = () => {
             setWeb3(web3);
             window.ethereum.request({ method: "eth_requestAccounts" })
                 .then(accounts => setAccount(accounts[0]));
-            const loterieInstance = new web3.eth.Contract(LoterieABI.abi, "0xD69aEA3D142335188248187824a0AB7D89D2c8E3");
+            const loterieInstance = new web3.eth.Contract(LoterieABI.abi, "0xde6fC82e4Cc450424e28b52E88B5f1635A4F5165");
             setLoterie(loterieInstance);
         }
     }, []);
@@ -29,7 +29,7 @@ const App = () => {
     };
 
     const lancerTirage = async () => {
-        await loterie.methods.lancerTirage().send({ from: account });
+        await loterie.methods.lancerTirage().send({ from: account, gas: 30000 });
     };
 
     const recupererParticipants = async () => {
@@ -62,7 +62,7 @@ const App = () => {
                 </button>
             </div>
             <h2 className="text-2xl font-semibold mt-8">Participants</h2>
-            <ul className="bg-gray-800 p-4 mt-4 rounded w-64 text-center">
+            <ul className="bg-gray-800 p-4 mt-4 rounded text-center">
                 {participants.length > 0 ? participants.map((participant, index) => (
                     <li key={index} className="border-b border-gray-700 py-2">{participant}</li>
                 )) : (
@@ -70,7 +70,7 @@ const App = () => {
                 )}
             </ul>
             <h2 className="text-2xl font-semibold mt-8">Gagnant</h2>
-            <p className="bg-gray-800 p-4 mt-4 rounded w-64 text-center">{gagnant || "Pas encore de gagnant"}</p>
+            <p className="bg-gray-800 p-4 mt-4 rounded text-center">{gagnant || "Pas encore de gagnant"}</p>
         </div>
     );
 };
