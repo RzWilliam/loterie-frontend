@@ -60,10 +60,11 @@ const App = () => {
     }
   };
 
+  console.log(participants, account)
+
   const recupererGagnant = async () => {
     try {
       const gagnant = await loterie.methods.recupererGagnant().call();
-      console.log("Gagnant :", gagnant);
       setGagnant(gagnant);
     } catch (error) {
       console.error("Erreur lors de la récupération du gagnant :", error);
@@ -84,13 +85,23 @@ const App = () => {
       <div className="flex gap-4">
         <button
           onClick={participer}
-          className="bg-blue-500 px-6 py-2 rounded hover:bg-blue-700"
+          className={`bg-blue-500 px-6 py-2 rounded transition-all ${
+            participants.map(p => p.toLowerCase()).includes(account.toLowerCase())
+              ? "cursor-not-allowed opacity-50"
+              : "hover:bg-blue-700"
+          }`}
+          disabled={participants.map(p => p.toLowerCase()).includes(account.toLowerCase())}
         >
           Participer
         </button>
         <button
           onClick={lancerTirage}
-          className="bg-red-500 px-6 py-2 rounded hover:bg-red-700"
+          className={`px-6 py-2 rounded bg-red-500 transition-all ${
+            participants.length < 2
+              ? "cursor-not-allowed opacity-50"
+              : " hover:bg-red-700"
+          }`}
+          disabled={participants.length < 2}
         >
           Lancer le Tirage
         </button>
