@@ -60,7 +60,7 @@ const App = () => {
     }
   };
 
-  console.log(participants, account)
+  console.log(participants, account);
 
   const recupererGagnant = async () => {
     try {
@@ -86,25 +86,37 @@ const App = () => {
         <button
           onClick={participer}
           className={`bg-blue-500 px-6 py-2 rounded transition-all ${
-            participants.map(p => p.toLowerCase()).includes(account.toLowerCase())
+            participants &&
+            account &&
+            participants
+              .map((p) => p.toLowerCase())
+              .includes(account.toLowerCase())
               ? "cursor-not-allowed opacity-50"
               : "hover:bg-blue-700"
           }`}
-          disabled={participants.map(p => p.toLowerCase()).includes(account.toLowerCase())}
+          disabled={
+            participants &&
+            account &&
+            participants
+              .map((p) => p.toLowerCase())
+              .includes(account.toLowerCase())
+          }
         >
           Participer
         </button>
-        <button
-          onClick={lancerTirage}
-          className={`px-6 py-2 rounded bg-red-500 transition-all ${
-            participants.length < 2
-              ? "cursor-not-allowed opacity-50"
-              : " hover:bg-red-700"
-          }`}
-          disabled={participants.length < 2}
-        >
-          Lancer le Tirage
-        </button>
+        {account && account === "0x1a0c73074db0a56c6cb17046b339bacaf9ef68b6" && (
+          <button
+            onClick={lancerTirage}
+            className={`px-6 py-2 rounded bg-red-500 transition-all ${
+              participants.length < 2
+                ? "cursor-not-allowed opacity-50"
+                : " hover:bg-red-700"
+            }`}
+            disabled={participants.length < 2}
+          >
+            Lancer le Tirage
+          </button>
+        )}
       </div>
       <h2 className="text-2xl font-semibold mt-8">Participants</h2>
       <ul className="bg-gray-800 p-4 mt-4 rounded text-center">
